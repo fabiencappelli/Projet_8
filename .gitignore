@@ -2,3 +2,9 @@ P8_Cityscapes_gtFine_trainvaltest/
 P8_Cityscapes_leftImg8bit_trainvaltest/
 gestion_git_init.ipynb
 gestion_git.ipynb
+dataset_sample/
+FULL_efficientnetb0_FPN_BS_8_LR_0.001.keras
+FULL_efficientnetb0_Linknet_BS_8_LR_0.001.keras
+FULL_resnet34_Unet_BS_16_LR_0.001.keras
+first_test.keras
+second_test.keras
