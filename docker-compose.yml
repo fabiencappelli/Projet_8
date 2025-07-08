@@ -4,6 +4,9 @@ services:
     image: ghcr.io/fabiencappelli/seg-api:latest
     ports:
       - "8000:8000"
+    labels:
+      - "azure.containerapps.ingress: external"
+      - "azure.containerapps.targetport: 8000"
   streamlit:
     image: ghcr.io/fabiencappelli/seg-ui:latest
     ports:
