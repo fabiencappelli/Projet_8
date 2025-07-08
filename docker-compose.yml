@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  api:
+    image: fabiencappelli/seg-api:latest
+    ports:
+      - "8000:8000"
+  streamlit:
+    image: fabiencappelli/seg-ui:latest
+    ports:
+      - "8501:8501"
+    environment:
+      - API_URL=http://api:8000
+
