@@ -9,7 +9,7 @@ import base64
 
 st.set_page_config(layout="wide")
 
-API_URL = "http://api.gentlemoss-1a1ffa84.westeurope.azurecontainerapps.io"
+API_URL = "https://api.gentlemoss-1a1ffa84.westeurope.azurecontainerapps.io"
 
 colormap = cm.get_cmap("tab20")
 
