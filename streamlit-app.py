@@ -100,7 +100,13 @@ elif mode == "From upload":
             image = Image.open(uploaded_file)
             st.image(image, caption="Real Image")
         with col2:
-            files = {"file": uploaded_file.getvalue()}
+            files = {
+                "file": (
+                    uploaded_file.name,
+                    uploaded_file.getvalue(),
+                    uploaded_file.type,
+                )
+            }
             resp = requests.post(f"{API_URL}/predict_upload", files=files)
             mask_b64 = resp.json().get("mask_b64")
             if mask_b64:
