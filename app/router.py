@@ -1,6 +1,7 @@
 from fastapi import APIRouter, UploadFile, File
 
-# import requests
+from fastapi.responses import StreamingResponse
+
 import base64
 from app.config import DATA_DIR, IMG_PATH_END, MASK_PATH_END
 import os
@@ -70,37 +71,11 @@ def predict_from_id(id: str):
     return {"id": id, "mask_b64": mask_b64}
 
 
-# @router.get("/ids")
-# def get_ids():
-#    try:
-#        r = requests.get(DATA_DIR, timeout=3)
-#        files = r.json()
-#        fichiers = [f["name"] for f in files if f["type"] == "file"]
-#        ids = [f[: -len(IMG_PATH_END)] for f in fichiers if f.endswith(IMG_PATH_END)]
-#        return {"ids": ids}
-#    except Exception as e:
-#        return {"error": str(e), "ids": []}
-
-
-# def build_raw_url(id, suffix):
-#    return f"https://raw.githubusercontent.com/fabiencappelli/Projet_8/main/data/{id}{suffix}"
-
-
-# @router.get("/image/{id}")
-# def get_image(id: str):
-#    url = build_raw_url(id, IMG_PATH_END)
-#    resp = requests.get(url)
-#    if resp.status_code != 200:
-#        return {"error": "Not found", "id": id}
-#    img_b64 = base64.b64encode(resp.content).decode("utf-8")
-#    return {"id": id, "image_b64": img_b64}
-
-
-# @router.get("/mask/{id}")
-# def get_mask(id: str):
-#    url = build_raw_url(id, MASK_PATH_END)
-#    resp = requests.get(url)
-#    if resp.status_code != 200:
-#        return {"error": "Not found", "id": id}
-#    msk_b64 = base64.b64encode(resp.content).decode("utf-8")
-#    return {"id": id, "mask_b64": msk_b64}
+@router.post("/predict_upload_image")
+async def predict_image(file: UploadFile = File(...)):
+    image_bytes = await file.read()
+    pred_mask_img = predict_mask(io.BytesIO(image_bytes))
+    buf = io.BytesIO()
+    pred_mask_img.save(buf, format="PNG")
+    buf.seek(0)
+    return StreamingResponse(buf, media_type="image/png")

@@ -9,3 +9,5 @@ FULL_resnet34_Unet_BS_16_LR_0.001.keras
 first_test.keras
 second_test.keras
 env/
+img/
+report/
